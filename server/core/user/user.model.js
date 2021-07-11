@@ -11,7 +11,6 @@ const User = db.define('user', {
   firstName: {
     type: DataTypes.STRING,
     allowNull: false,
-
   },
   lastName: {
     type: DataTypes.STRING,
@@ -25,6 +24,27 @@ const User = db.define('user', {
   password: {
     type: DataTypes.STRING,
     allowNull: false
+  },
+  role: {
+    type: DataTypes.STRING,
+    defaultValue: "USER"
+  },
+  age: {
+    type: DataTypes.INTEGER
+  },
+  isOnline: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false
+  },
+  isActivated: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false
+  },
+  activationLink: {
+    type: DataTypes.STRING,
+    defaultValue: null
   }
 })
 

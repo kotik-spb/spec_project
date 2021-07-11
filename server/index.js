@@ -5,13 +5,11 @@ const PORT = process.env.PORT || 5000;
 const router = require('./router/index');
 const db = require('./db');
 const models = require('./models');
-const User = require('./core/user/user.model');
-const UserRepository = require('./core/user/user.repository');
 const app = express();
 
 app.use(cors());
-app.use('/api', router);
 app.use(express.json());
+app.use('/api', router);
 
 const startServer = async () => {
   try {

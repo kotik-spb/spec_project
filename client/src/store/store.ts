@@ -1,5 +1,8 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 
+// TODO: REDUCER
+// userReducer - isAuth, currentUser: IUser
+// appReducer - alertVisible: boolean, alertMsg: string, alertColor: red | green | yellow
 export const store = configureStore({
   reducer: {},
 });
