@@ -1,8 +1,7 @@
-const Post = require("./post.model");
-const postRepository = require("./post.repository")
+const postRepository = require("../repositories/post.repository")
 
 class PostService {
-  static async getPostsByUser() {
+  async getPostsByUser() {
     try {
       const userId = 1;
       const posts = await postRepository.getAllPostsByUser(userId)
@@ -12,7 +11,7 @@ class PostService {
     }
   }
 
-  static async getPostById(idPost) {
+  async getPostById(idPost) {
     try {
       const post = await postRepository.getPostByParams(idPost)
       return post;
@@ -21,33 +20,28 @@ class PostService {
     }
   }
 
-  static async createPost({title, content, userId}) {
+  async createPost(postData) {
     try {
-      const post = await Post.create({
-        title,
-        content,
-        userId
-      });
-
-      return post;
+      const post = await postRepository.createPost(postData)
+      return post;  
     } catch (error) {
       throw new Error(error.message);
     }
   }
 
-  static async deletePost(idPost) {
+  async deletePost(idPost) {
     try {
       const post = await postRepository.getPostByParams(idPost);
       if (!post) {
         throw new Error("No post with such an ID!");
       }
-      await post.destroy()
+      await postRepository.deletePost(post);
     } catch (error) {
       res.status(500).json(error.message);
     }
   }
 
-  static async updatePost(idPost, newData) {
+  async updatePost(idPost, newData) {
     try {
       const post = await postRepository.updatePostById(idPost, newData);
       return post;
@@ -57,4 +51,6 @@ class PostService {
   }
 }
 
-module.exports = PostService
+module.exports = new PostService()
+
+

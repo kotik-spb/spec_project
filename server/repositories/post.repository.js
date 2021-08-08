@@ -1,4 +1,4 @@
-const Post = require("./post.model");
+const Post = require("../models/post.model");
 
 class PostRepository {
   async getAllPostsByUser(userId) {
@@ -6,10 +6,11 @@ class PostRepository {
       const posts = await Post.findAll({
         where:{
           id_user: userId
-        }
+        },
+        order: [['createdAt', 'DESC']]
       });
 
-      return posts.sort(((a,b) => b.createdAt - a.createdAt));
+      return posts;
     } catch (error) {
       console.log(error);
       throw new Error("Ошибка в Post/Repository/getAllPostsByUser");
@@ -25,6 +26,19 @@ class PostRepository {
     }
   }
 
+  async createPost({title, content, userId}) {
+    try {
+      const post = await Post.create({
+        title,
+        content,
+        userId
+      });
+      return post;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   async updatePostById(idPost, {title, content}) {
     try {      
       const post = await Post.update(
@@ -35,6 +49,14 @@ class PostRepository {
       return post;
     } catch (error) {
       throw new Error("Ошибка в Post/Repository/updatePostById");
+    }
+  }
+
+  async deletePost(post) {
+    try {
+      await post.destroy()
+    } catch (error) {
+      console.log(error);
     }
   }
 }

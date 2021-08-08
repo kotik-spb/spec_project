@@ -1,6 +1,6 @@
-const Post = require("./post.model");
-const postRepository = require("./post.repository");
-const PostService = require("./post.service");
+const Post = require("../models/post.model");
+const postRepository = require("../repositories/post.repository");
+const PostService = require("../services/post.service");
 
 class PostController {
 

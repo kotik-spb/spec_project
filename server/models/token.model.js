@@ -1,21 +1,22 @@
-const db = require("../../db");
-const {DataTypes, Deferrable} = require("sequelize");
-const User = require("../user/user.model");
+const { Deferrable, DataTypes } = require("sequelize/types");
 
-const Post = db.define('post', {
+const db = require("../db");
+const User = require("./user.model");
+
+const Token = db.define('token', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
     allowNull: false
   },
-  title: {
+  refreshToken: {
     type: DataTypes.STRING,
     allowNull: false
   },
-  content: {
-    type: DataTypes.TEXT,
-    allowNull: false
+  idAddress: {
+    type: DataTypes.STRING,
+    defaultValue: null
   },
   userId: {
     type: DataTypes.INTEGER,
@@ -29,4 +30,4 @@ const Post = db.define('post', {
   }
 })
 
-module.exports = Post;
+module.exports = Token;

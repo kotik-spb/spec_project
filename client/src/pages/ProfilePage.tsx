@@ -1,19 +1,24 @@
-import axios from 'axios';
-import React, { ChangeEvent, SyntheticEvent, useState, useRef } from 'react'
+import React, { ChangeEvent, SyntheticEvent, useState, useRef, createRef } from 'react'
 import { Container, Row, Col, Form, Button } from 'react-bootstrap'
 import Post from '../components/Post';
 import Modal from '../components/ModalComponent';
 import { IPost } from '../types/post';
+import * as postService from "../services/postService";
+import FileUploader from '../components/helpers/FileUploader';
 
 const Profile = () => {
+  // TODO заменить хуки useState на useReducer
   const [posts, setPosts] = useState<IPost[]>([]);
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
   
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
-  const [currentEditPostId, setCurrentEditPostId] = useState<number|null>(null);
+  const [currentEditPostId, setCurrentEditPostId] = useState<number>(0);
   const [idPostToDelete, setIdPostToDelete] = useState<number>(0);
   const [show, setShow] = useState(false);
+  
+  const formRef = useRef<HTMLFormElement>(null);
+  const $fileUpload = createRef();
 
 
   const handleAccept = () => {
@@ -27,21 +32,19 @@ const Profile = () => {
     setIdPostToDelete(0)
   };
   
-  const formRef = useRef<HTMLFormElement>(null);
-
 
   React.useEffect(() => {
     fetchPostsByUser()
   },[]);
 
   async function fetchPostsByUser(): Promise<void> {
-    const {data} = await axios.get("http://localhost:5000/api/user/1/posts")
+    const {data} = await postService.fetchPostsByUser()
     setPosts(data);
   }
 
   async function fetchPostById(idPost: number) {
     try {
-      const {data} = await axios.get(`http://localhost:5000/api/user/1/posts/${idPost}`)
+      const {data} = await postService.fetchPostById(idPost);
       return data;
     } catch (error) {
       console.log(error);
@@ -54,10 +57,7 @@ const Profile = () => {
 
     if (title && content) {
       try {
-        const {data} = await axios.post(
-          "http://localhost:5000/api/user/1/posts",
-          {title, content}
-        );
+        const {data} = await postService.createPost({title,content});
 
         console.log("Новый пост был успешно добавлен!");
         console.log(data);
@@ -91,7 +91,7 @@ const Profile = () => {
 
   function cancelPostUpdating() {
     setIsEditMode(false);
-    setCurrentEditPostId(null);
+    setCurrentEditPostId(0);
     setTitle("");
     setContent("");
   }
@@ -103,13 +103,10 @@ const Profile = () => {
         throw new Error("Не заполнена тема или тело поста")
       }
       
-      await axios.patch(
-        `http://localhost:5000/api/user/1/posts/${currentEditPostId}`,
-        {title, content}
-      );
+      await postService.updatePostById({idPost: currentEditPostId, title, content})
 
       console.log('Пост успешно обновлен!');
-      setCurrentEditPostId(null);
+      setCurrentEditPostId(0);
       setIsEditMode(false);
       setTitle("");
       setContent("");
@@ -126,7 +123,7 @@ const Profile = () => {
 
   async function deletePost(idPost:number) {
     try {
-      await axios.delete(`http://localhost:5000/api/user/1/posts/${idPost}`);
+      await postService.deletePostById(idPost);
       await fetchPostsByUser();
       console.log('Пост успешно удален');
     } catch (error) {
@@ -134,11 +131,33 @@ const Profile = () => {
     }
   }
 
+  async function loadImage() {
+    console.log('Здесь будет содержаться логика загрузки страницы');
+  }
+
+  // async function chooseImage() {
+  //   console.log(this);
+    
+  // }
+
   return (
     <Container className="pt-3">
       <Row>
-        <Col sm="3">Kind of Image</Col>
-        <Col sm="9">
+        <Col sm="4">
+          <p>
+            Kind of Image
+          </p>
+          <FileUploader />
+          <Button
+            onClick={() => loadImage()}
+            type="button"
+            variant="outline-dark"
+            size="sm"
+          >
+            Загрузить аватарку
+          </Button>
+        </Col>
+        <Col sm="8">
           <div>
             <h2><strong>Иван Иванов</strong></h2>
             <ul>

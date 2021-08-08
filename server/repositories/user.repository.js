@@ -1,8 +1,8 @@
-const User = require("./user.model");
+const User = require("../models/user.model");
 
 class UserRepository {
   
-  static async getAllUsers() {
+  async getAllUsers() {
     try {
       const users = await User.findAll();
       return users
@@ -11,7 +11,7 @@ class UserRepository {
     }
   }
 
-  static async getUserByParams(params) {
+  async getUserByParams(params) {
     try {
       const user = await User.findAll({
         where: {...params}
@@ -21,6 +21,15 @@ class UserRepository {
       console.log('Ошибка при попытке сделать запрос на получения пользователя');
     }
   }
+
+  async createUser({email, password: hashedPassword, firstName, lastName}) {
+    try {
+      const user = await User.create({email, password: hashedPassword, firstName, lastName})
+      return user
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
 
-module.exports = UserRepository;
+module.exports = new UserRepository();

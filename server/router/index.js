@@ -1,7 +1,8 @@
 const router = require('express').Router();
-const postController = require('../core/post/post.controller');
-const userController = require('../core/user/user.controller');
+const postController = require('../controllers/post.controller');
+const userController = require('../controllers/user.controller');
 
+// TODO прочитать про REST API
 router.get('/user', userController.getAllUsers);
 router.get('/user/:id/posts', postController.getPostsByUser);
 router.get('/user/:id/posts/:idPost', postController.getPostById);

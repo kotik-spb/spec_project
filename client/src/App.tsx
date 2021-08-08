@@ -5,7 +5,7 @@ import {
 } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import Navbar from './components/NavbarComponent';
-import AppRouter from './components/AppRouter';
+import AppRouter from './components/helpers/AppRouter';
 
 import "./styles/main.scss"
 
@@ -16,9 +16,7 @@ function App() {
       <Router>
         <Navbar />
         <Container className="d-flex justify-content-center align-items-center">
-          <Switch>
-            <AppRouter />
-          </Switch>
+          <AppRouter />
         </Container>
       </Router>
     </Container>

@@ -4,9 +4,9 @@ const cors = require('cors')
 const PORT = process.env.PORT || 5000;
 const router = require('./router/index');
 const db = require('./db');
-const models = require('./models');
 const app = express();
 
+app.use('/static', express.static(__dirname + '/static'));
 app.use(cors());
 app.use(express.json());
 app.use('/api', router);

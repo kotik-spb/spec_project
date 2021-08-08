@@ -1,5 +1,5 @@
-const db = require('../../db');
-const User = require('../user/user.model');
+const db = require('../db');
+const User = require('./user.model');
 const { DataTypes, Deferrable } = require('sequelize/types');
 
 const Chat = db.define('chat', {

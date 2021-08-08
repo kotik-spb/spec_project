@@ -2,8 +2,9 @@ import React, { ChangeEvent, SyntheticEvent, useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { History } from 'history';
-import axios, { AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 import { ILoginResData } from '../types/user';
+import { signIn } from '../services/userService';
 
 
 const Login = () => {
@@ -11,26 +12,19 @@ const Login = () => {
   const [password, setPassword] = useState<string>("");
   const history = useHistory<History>();
 
-  function logIn(e: SyntheticEvent<HTMLFormElement>): void {
+  async function logIn(e: SyntheticEvent<HTMLFormElement>): Promise<void> {
     e.preventDefault();
 
     if (email && password) {
-      const data = {email, password};
-
-      axios.post(
-        "http://localhost:5000/api/user/login",
-        data
-      )
-      .then(({data}:AxiosResponse<ILoginResData>) => {
+      try {
+        const {data}:AxiosResponse<ILoginResData> = await signIn({email, password})
         history.push(`/id_${data.id}`);
         localStorage.setItem("ID_USER", (data.id).toString());
-      })
-      .catch(e => {
+      } catch (error) {
         console.error('Ошибка при попытке авторизации');
-        console.error(e);
-      })
-    }    
-    
+        console.log(error);
+      }    
+    }
   }
 
   return (

@@ -1,12 +1,12 @@
 import React from 'react';
-import {Redirect, Route} from 'react-router-dom';
-import NotFoundPage from '../pages/NotFoundPage';
-import {publicRoutes, privateRoutes} from '../routes';
+import {Redirect, Route, Switch} from 'react-router-dom';
+import NotFoundPage from '../../pages/NotFoundPage';
+import {publicRoutes, privateRoutes} from '../../routes';
 
 const AppRouter = () => {
   const idUser = localStorage.getItem("ID_USER");
   return (
-    <>
+    <Switch>
       {
         publicRoutes.map((r, idx) => (
           <Route
@@ -29,9 +29,9 @@ const AppRouter = () => {
           />
         ))
       }
-      <Redirect exact from="/" to={idUser ? `/id_${idUser}` : '/login'}/>
-      <Route path="*" component={NotFoundPage} />
-    </>
+      {/* <Redirect exact  from="/" to={idUser ? `/id_${idUser}` : '/login'}/> */}
+      {/* <Route path="*" component={NotFoundPage} /> */}
+    </Switch>
   )
 }
 

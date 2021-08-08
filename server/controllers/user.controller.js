@@ -1,5 +1,5 @@
-const UserRepository = require("./user.repository");
-const UserService = require('./user.service');
+const UserRepository = require("../repositories/user.repository");
+const UserService = require('../services/user.service');
 class UserController {
   async getAllUsers(req,res,next) {
     const users = await UserRepository.getAllUsers();

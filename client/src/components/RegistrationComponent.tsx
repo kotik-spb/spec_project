@@ -1,8 +1,9 @@
-import axios, { AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 import React, { ChangeEvent, SyntheticEvent, useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { ISignUpResData } from '../types/user';
+import { createUser } from '../services/userService';
 
 const SignUp = () => {
   
@@ -13,7 +14,7 @@ const SignUp = () => {
   const [passwordReapeat, setPasswordReapeat] = useState<string>("");
   const history = useHistory<History>();
 
-  function signUp(e: SyntheticEvent<HTMLFormElement> ): void {
+  async function register(e: SyntheticEvent<HTMLFormElement> ): Promise<void> {
     
     e.preventDefault();
 
@@ -21,23 +22,18 @@ const SignUp = () => {
         email && password && firstName && lastName && passwordReapeat
         && (passwordReapeat === password)
       ) {
-        const data = {email, password, firstName, lastName};
-
-      axios.post(
-        "http://localhost:5000/api/user/create",
-        data
-      )
-      .then(({data}:AxiosResponse<ISignUpResData>) => {
-        history.push(`/id_${data.id}`);
-        localStorage.setItem("ID_USER", (data.id).toString());
-      })
-      .catch(e => {
-        console.error('Ошибка при попытке регистрации');
-        console.error(e);
-      })
+        try {
+          const {data}:AxiosResponse<ISignUpResData> = await createUser({email, password, firstName, lastName})
+          history.push(`/id_${data.id}`);
+          localStorage.setItem("ID_USER", (data.id).toString());
+        } catch (error) {
+          console.error('Ошибка при попытке регистрации');
+          console.log(error); 
+        }
     }    
     
   }
+
   return (
     <Form
       className="p-4"
@@ -46,7 +42,7 @@ const SignUp = () => {
         border: "1px solid #e5e5e5",
         borderRadius: 10
       }}
-      onSubmit={signUp}
+      onSubmit={register}
     >
 
       <Form.Group controlId="formFirstName">

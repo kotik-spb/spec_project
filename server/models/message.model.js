@@ -1,8 +1,8 @@
 const {DataTypes, Deferrable} = require("sequelize");
 
-const db = require("../../db");
+const db = require("../db");
 const MessageType = require("./additionalModels/messageType.model");
-const User = require("../user/user.model");
+const User = require("./user.model");
 const Chat = require("../chat/chat.model");
 
 const Message = db.define('message', {

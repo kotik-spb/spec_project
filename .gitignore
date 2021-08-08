@@ -23,5 +23,5 @@ client/yarn-debug.log*
 client/yarn-error.log*
 
 #other
-_notes
+.notes
 .env

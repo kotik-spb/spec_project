@@ -1,17 +1,13 @@
-import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
+import { configureStore } from "@reduxjs/toolkit";
+import userReducer from "./features/userSlice"
+import appReducer from "./features/appSlice"
 
-// TODO: REDUCER
-// userReducer - isAuth, currentUser: IUser
-// appReducer - alertVisible: boolean, alertMsg: string, alertColor: red | green | yellow
 export const store = configureStore({
-  reducer: {},
-});
+  reducer: {
+    user: userReducer,
+    app: appReducer
+  }
+})
 
-export type AppDispatch = typeof store.dispatch;
-export type RootState = ReturnType<typeof store.getState>;
-export type AppThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
-  RootState,
-  unknown,
-  Action<string>
->;
+export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch

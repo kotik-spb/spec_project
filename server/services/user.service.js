@@ -1,12 +1,11 @@
-const User = require("./user.model");
 const bcrypt = require("bcrypt");
-const UserRepository = require("./user.repository");
+const userRepository = require("../repositories/user.repository");
 
 class UserService {
 
-  static async login({email, password}) {
+  async login({email, password}) {
     try {
-      const user = await UserRepository.getUserByParams({email});
+      const user = await userRepository.getUserByParams({email});
       if (!user) {
         throw new Error("Пользователя не существует")
       }
@@ -24,13 +23,13 @@ class UserService {
     }
   }
   
-  static async createUser({email, password, firstName, lastName}) {
+  async createUser({email, password, firstName, lastName}) {
     try {
-      const user = await UserRepository.getUserByParams({email})
+      const user = await userRepository.getUserByParams({email})
 
       if (!user) {
         const hashedPassword = await bcrypt.hash(password, 5);
-        const user = await User.create({email, password: hashedPassword, firstName, lastName})
+        const user = await userRepository.createUser({email, password: hashedPassword, firstName, lastName})
         console.log(user);
         return user
       }
@@ -40,4 +39,8 @@ class UserService {
   }
 }
 
-module.exports = UserService;
+module.exports = new UserService();
+
+// interface IUserRepository {
+//   getUserByParams(): Promise<>;
+// }

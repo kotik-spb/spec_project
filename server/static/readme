@@ -1,0 +1,7 @@
+Будет иметь следующий вид
+static
+  -id_user
+    - imgs
+    - files
+    - audio
+    - video
