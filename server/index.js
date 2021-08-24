@@ -6,12 +6,14 @@ const router = require('./router/index');
 const db = require('./db');
 const app = express();
 const cookieParser = require("cookie-parser");
+const errorMiddleware = require('./middleware/error.middleware');
 
 app.use(cookieParser())
 app.use('/static', express.static(__dirname + '/static'));
 app.use(cors({origin: process.env.CLIENT_URL, credentials: true}));
 app.use(express.json());
 app.use('/api', router);
+app.use(errorMiddleware);
 
 const startServer = async () => {
   try {

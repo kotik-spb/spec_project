@@ -1,38 +1,35 @@
-const Post = require("../models/post.model");
-const postRepository = require("../repositories/post.repository");
-const PostService = require("../services/post.service");
+const postService = require("../services/post.service");
 
 class PostController {
 
-  async getPostsByUser(req,res,next) {
+  async getPostsByUser(req, res, next) {
     try {
       const userId = 1;
-      const posts = await PostService.getPostsByUser(userId);
+      const posts = await postService.getPostsByUser(userId);
       return res.json(posts);
     } catch (error) {
-      return res.status(500).json(error.message)
+      next(error)
     }
   }
 
-  async getPostById(req,res,next) {
+  async getPostById(req, res, next) {
     try {
       const {idPost} = req.params;
-      const post = await PostService.getPostById(idPost);
+      const post = await postService.getPostById(idPost);
       return res.json(post);
     } catch (error) {
-      console.log(error.message);
-      return res.status(500).json(error.message);
+      next(error)
     }
   }
   
-  async createPost(req,res,next) {
+  async createPost(req, res, next) {
     try {
       const userId = 1;
       const {title, content} = req.body;
-      const post = await PostService.createPost({title, content, userId});
+      const post = await postService.createPost({title, content, userId});
       return res.json(post);
     } catch (error) {
-      return res.status(500).json(error.message)
+      next(error)
     }
 
   }
@@ -42,10 +39,10 @@ class PostController {
       const {idPost} = req.params;
       const {title, content} = req.body
       console.log(idPost, title, content);
-      const post = await PostService.updatePost(idPost, {title, content});
+      const post = await postService.updatePost(idPost, {title, content});
       return res.json(post);
     } catch (error) {
-      return res.status(500).json(error.message)
+      next(error)
     }
   }
 
@@ -53,10 +50,10 @@ class PostController {
     try {
       const {idPost} = req.params;
       console.log('Удаление поста контроллер', idPost);
-      await PostService.deletePost(idPost);
+      await postService.deletePost(idPost);
       return res.json("Пост был успешно удален");
     } catch (error) {
-      return res.status(500).json(error.message)
+      next(error)
     }
   }
 }

@@ -4,14 +4,16 @@ const UserDto = require("../dtos/user.dto");
 const mailSerivce = require("../services/mail.service");
 const v4 = require("uuid").v4;
 const tokenService = require("./token.service");
+const { ErrorHandler } = require("../error");
+
 class UserService {
 
   async registration({email, password, firstName, lastName}) {
-    const existingUser = await userRepository.getUserByParams({email})
-
-    if (existingUser) {
-      throw new Error("Пользователь с таким email уже существует")
-    }
+      const existingUser = await userRepository.getUserByParams({email})
+  
+      if (existingUser) {
+        throw new ErrorHandler(409, "Пользователь с таким email уже существует")
+      }
     
     const idActivation = v4();
     const hashedPassword = await bcrypt.hash(password, 5);
@@ -37,7 +39,7 @@ class UserService {
     const user = await userRepository.getUserByParams({idActivation})
 
     if (!user) {
-      throw new Error("Пользователь с такой ссылкой активации не найден")
+      throw new ErrorHandler(400, "Пользователь с такой ссылкой активации не найден")
     }
 
     user.isActivated = true;
@@ -47,23 +49,17 @@ class UserService {
   }
 
   async login({email, password}) {
-    try {
       const user = await userRepository.getUserByParams({email});
       if (!user) {
-        throw new Error("Пользователя не существует")
+        throw new ErrorHandler(400, "Пользователя не существует")
       }
       const isCorrectPassword = await bcrypt.compare(password, user.password);
 
       if (!isCorrectPassword) {
-        throw new Error("Неверный пароль")
+        throw new ErrorHandler(400, "Неверный пароль")
       }
-      const {firstName, lastName, id} = user;
 
-      return {firstName, lastName, id}
-    } catch (error) {
-      console.log('Ошибка в User/Service/login');
-      throw new Error(error.message);
-    }
+      return user
   }
 }
 
