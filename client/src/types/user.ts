@@ -1,4 +1,8 @@
-export interface ISignUpResData {
+export interface IUser {
+  id: number;
+  email: string;
+}
+export interface IRegistrationResData {
   id: number
 }
 

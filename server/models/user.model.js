@@ -42,9 +42,10 @@ const User = db.define('user', {
     allowNull: false,
     defaultValue: false
   },
-  activationLink: {
+  idActivation: {
     type: DataTypes.STRING,
-    defaultValue: null
+    defaultValue: null,
+    unique: true
   }
 })
 

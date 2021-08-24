@@ -1,13 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
 import {Navbar, Nav} from 'react-bootstrap'
+import AuthService from '../services/AuthService';
 
 const NavbarComponent = () => {
 
-  const logout = () => {
-    console.log('Helllo World');
-    
-  };
+  function logout() {
+    return AuthService.logout();
+  }
 
   return (
     <Navbar collapseOnSelect expand="md" bg="dark" variant="dark">

@@ -3,8 +3,8 @@ import { Form, Button } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { History } from 'history';
 import { AxiosResponse } from 'axios';
-import { ILoginResData } from '../types/user';
-import { signIn } from '../services/userService';
+import AuthService from '../services/AuthService';
+import { IAuthResponse } from '../types/auth';
 
 
 const Login = () => {
@@ -17,9 +17,9 @@ const Login = () => {
 
     if (email && password) {
       try {
-        const {data}:AxiosResponse<ILoginResData> = await signIn({email, password})
-        history.push(`/id_${data.id}`);
-        localStorage.setItem("ID_USER", (data.id).toString());
+        const {data}:AxiosResponse<IAuthResponse> = await AuthService.login({email, password})
+        history.push(`/id_${data.user.id}`);
+        localStorage.setItem("ID_USER", (data.user.id).toString());
       } catch (error) {
         console.error('Ошибка при попытке авторизации');
         console.log(error);

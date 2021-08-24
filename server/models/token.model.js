@@ -1,4 +1,4 @@
-const { Deferrable, DataTypes } = require("sequelize/types");
+const { Deferrable, DataTypes } = require("sequelize");
 
 const db = require("../db");
 const User = require("./user.model");
@@ -13,10 +13,6 @@ const Token = db.define('token', {
   refreshToken: {
     type: DataTypes.STRING,
     allowNull: false
-  },
-  idAddress: {
-    type: DataTypes.STRING,
-    defaultValue: null
   },
   userId: {
     type: DataTypes.INTEGER,
