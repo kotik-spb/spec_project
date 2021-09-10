@@ -1,15 +1,18 @@
 const router = require('express').Router();
 const postController = require('../controllers/post.controller');
 const userController = require('../controllers/user.controller');
+const authMiddleware = require("../middleware/auth.middleware")
 
 // TODO прочитать про REST API
-router.get('/user', userController.getAllUsers);
+router.get('/user', authMiddleware, userController.getAllUsers);
 router.get('/user/:id/posts', postController.getPostsByUser);
 router.get('/user/:id/posts/:idPost', postController.getPostById);
 router.get('/user/activate/:idActivation', userController.activateAccount);
+router.get('/user/refresh', userController.refresh);
 
 router.post('/user/registration', userController.registration);
 router.post('/user/login', userController.login);
+router.post('/user/logout', userController.logout);
 router.post('/user/file', userController.uploadFile)
 router.post('/user/:id/posts', postController.createPost);
 

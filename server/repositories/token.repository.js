@@ -1,9 +1,15 @@
 const Token = require("../models/token.model");
 
 class TokenRepository {
-  async getTokenByParam(fieldName, fieldValue) {
-    const token = await Token.findOne({where: {[fieldName]: fieldValue}});
+  async getTokenByParam(params) {
+    const token = await Token.findOne({where: params});
     return token;
+  }
+
+  async deleteTokenByParams(params) {
+    await Token.destroy({
+      where: params
+    })
   }
 }
 
