@@ -1,3 +1,4 @@
+const { ErrorHandler } = require("../error");
 const User = require("../models/user.model");
 
 class UserRepository {
@@ -10,7 +11,7 @@ class UserRepository {
   async getUserByParams(params) {
     const user = await User.findOne({
       where: {...params}
-    })    
+    })
     return user;
   }
 
