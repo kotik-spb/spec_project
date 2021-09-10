@@ -1,9 +1,10 @@
-import { AxiosResponse } from 'axios';
-import React, { ChangeEvent, SyntheticEvent, useState } from 'react';
+import { ChangeEvent, SyntheticEvent, useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import AuthService from "../services/AuthService";
-import { IAuthResponse } from '../types/auth';
+import { setAuthState } from '../store/features/auth/authSlice';
+import { setUser } from '../store/features/userSlice';
+import { useAppDispatch } from '../store/hooks';
 
 const SignUp = () => {
   
@@ -13,25 +14,26 @@ const SignUp = () => {
   const [password, setPassword] = useState<string>("");
   const [passwordReapeat, setPasswordReapeat] = useState<string>("");
   const history = useHistory<History>();
+  const dispatch = useAppDispatch();
 
   async function register(e: SyntheticEvent<HTMLFormElement> ): Promise<void> {
     e.preventDefault();
     if (
         email && password && firstName && lastName && passwordReapeat
         && (passwordReapeat === password)
-      ) {
-        try {
-          const {data}:AxiosResponse<IAuthResponse> = await AuthService.registration({email, password, firstName, lastName})
-          console.log(data);
-
-          // history.push(`/id_${data.user.id}`);
-          // localStorage.setItem("ID_USER", (data.user.id).toString());
-        } catch (error) {
-          console.error('Ошибка при попытке регистрации');
-          console.log(error); 
-        }
+    ) {
+      try {
+        const {data} = await AuthService.registration({email, password, firstName, lastName})
+        dispatch(setUser(data.user))
+        dispatch(setAuthState(true))
+        localStorage.setItem("token", data.accessToken);
+        history.push(`/id_${data.user.id}`);
+      }
+      catch (error) {
+        console.error('Ошибка при попытке регистрации');
+        
+      }
     }    
-    
   }
 
   return (

@@ -1,4 +1,3 @@
-import { IUser } from './../../types/user';
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface ICommonSlice {

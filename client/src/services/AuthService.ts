@@ -3,7 +3,7 @@ import { AxiosResponse } from "axios";
 import { $axiosApiInstance } from "../http"
 
 export default class AuthService {
-  static async registration(payload: IRegistrationData): Promise<AxiosResponse<IAuthResponse>>{
+  static async registration(payload: IRegistrationData): Promise<AxiosResponse<IAuthResponse>> {
     return $axiosApiInstance.post<IAuthResponse>('/user/registration', payload);
   }
 
@@ -11,7 +11,7 @@ export default class AuthService {
     return $axiosApiInstance.post<IAuthResponse>('/user/login', payload);
   }
 
-  static async logout() {
+  static async logout(): Promise<void> {
     return $axiosApiInstance.post("/user/logout")
   }
 }

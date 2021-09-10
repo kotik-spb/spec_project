@@ -1,26 +1,30 @@
-import React, { ChangeEvent, SyntheticEvent, useState } from 'react';
+import { ChangeEvent, SyntheticEvent, useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { History } from 'history';
-import { AxiosResponse } from 'axios';
 import AuthService from '../services/AuthService';
-import { IAuthResponse } from '../types/auth';
+import { useAppDispatch } from '../store/hooks';
+import { setUser } from '../store/features/userSlice';
 
 
 const Login = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const history = useHistory<History>();
+  const dispatch = useAppDispatch();
 
   async function logIn(e: SyntheticEvent<HTMLFormElement>): Promise<void> {
     e.preventDefault();
 
+
     if (email && password) {
       try {
-        const {data}:AxiosResponse<IAuthResponse> = await AuthService.login({email, password})
+        const {data} = await AuthService.login({email, password})
+        localStorage.setItem("token", data.accessToken);
+        dispatch(setUser(data.user));
         history.push(`/id_${data.user.id}`);
-        localStorage.setItem("ID_USER", (data.user.id).toString());
-      } catch (error) {
+      }
+      catch (error) {
         console.error('Ошибка при попытке авторизации');
         console.log(error);
       }    

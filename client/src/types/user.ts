@@ -1,6 +1,9 @@
 export interface IUser {
   id: number;
   email: string;
+  firstName: string;
+  lastName: string;
+  isActivated: boolean;
 }
 export interface IRegistrationResData {
   id: number

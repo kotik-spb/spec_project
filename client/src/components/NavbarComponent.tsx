@@ -2,20 +2,33 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 import {Navbar, Nav} from 'react-bootstrap'
 import AuthService from '../services/AuthService';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { setAuthState } from '../store/features/auth/authSlice';
+import { setUser } from '../store/features/userSlice';
+import { IUser } from '../types/user';
 
 const NavbarComponent = () => {
 
-  function logout() {
-    return AuthService.logout();
+  const {user,auth} = useAppSelector(({user, auth}) => ({user, auth}));
+  const dispatch = useAppDispatch();
+
+  async function logout() {
+    try {
+      dispatch(setAuthState(false));
+      dispatch(setUser({} as IUser));
+      await AuthService.logout();
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
     <Navbar collapseOnSelect expand="md" bg="dark" variant="dark">
       <Navbar.Brand
         href={
-          localStorage.getItem("ID_USER")
-            ? `/id_${localStorage.getItem("ID_USER")}`
-            : "id_1"
+          user.currentUser?.id
+            ? `/id_${user.currentUser.id}`
+            : "/login"
         }
       >
         X Project
@@ -25,8 +38,8 @@ const NavbarComponent = () => {
         <Nav className="mr-auto">
             <Link className={"nav-link"}
               to={
-                localStorage.getItem("ID_USER")
-                  ? `/id_${localStorage.getItem("ID_USER")}`
+                user.currentUser?.id
+                  ? `/id_${user.currentUser.id}`
                   : "id_1"
               }
             >Профиль</Link>
