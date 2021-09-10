@@ -22,7 +22,7 @@ app.use(errorMiddleware);
 const startServer = async () => {
   try {
     await db.authenticate();
-    await db.sync({force: true});
+    await db.sync();
     console.log('Successfully connected to the DB');
     app.listen(PORT, () => console.log(`Server started on port ${PORT}`))
   } catch (error) {
