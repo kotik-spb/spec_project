@@ -1,5 +1,6 @@
 require('dotenv').config()
 const express = require('express');
+const fileUpload = require("express-fileupload");
 const cors = require('cors')
 const PORT = process.env.PORT || 5000;
 const router = require('./router/index');
@@ -8,6 +9,9 @@ const app = express();
 const cookieParser = require("cookie-parser");
 const errorMiddleware = require('./middleware/error.middleware');
 
+app.use(fileUpload({
+  createParentPath: true
+}));
 app.use(cookieParser())
 app.use('/static', express.static(__dirname + '/static'));
 app.use(cors({origin: process.env.CLIENT_URL, credentials: true}));

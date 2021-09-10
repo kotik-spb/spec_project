@@ -10,6 +10,7 @@ router.get('/user/activate/:idActivation', userController.activateAccount);
 
 router.post('/user/registration', userController.registration);
 router.post('/user/login', userController.login);
+router.post('/user/file', userController.uploadFile)
 router.post('/user/:id/posts', postController.createPost);
 
 router.patch('/user/:id/posts/:idPost', postController.updatePost);
