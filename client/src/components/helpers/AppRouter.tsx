@@ -1,10 +1,7 @@
-import React from 'react';
-import {Redirect, Route, Switch} from 'react-router-dom';
-import NotFoundPage from '../../pages/NotFoundPage';
+import {Route, Switch} from 'react-router-dom';
 import {publicRoutes, privateRoutes} from '../../routes';
 
 const AppRouter = () => {
-  const idUser = localStorage.getItem("ID_USER");
   return (
     <Switch>
       {
@@ -29,18 +26,8 @@ const AppRouter = () => {
           />
         ))
       }
-      {/* <Redirect exact  from="/" to={idUser ? `/id_${idUser}` : '/login'}/> */}
-      {/* <Route path="*" component={NotFoundPage} /> */}
     </Switch>
   )
 }
 
 export default AppRouter
-
-
-{/* <Route */}
-// path={notFoundRoute.path}
-// component={notFoundRoute.component}
-// exact={notFoundRoute.exact}
-// {...notFoundRoute.params}
-{/* /> */}

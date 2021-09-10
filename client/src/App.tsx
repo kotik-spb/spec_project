@@ -16,6 +16,7 @@ function App() {
 
   useEffect(() => {
     dispatch(checkAuth());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const loadUsers = async () => {
@@ -60,7 +61,7 @@ function App() {
         <Container className="d-flex justify-content-center align-items-center">
           <AppRouter />
         </Container>
-        // TODO error handler toast component
+        {/* TODO error handler toast component */}
       </Router>
     </Container>
   );

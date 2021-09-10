@@ -9,7 +9,7 @@ import { IUser } from '../types/user';
 
 const NavbarComponent = () => {
 
-  const {user,auth} = useAppSelector(({user, auth}) => ({user, auth}));
+  const user = useAppSelector(({user}) => user);
   const dispatch = useAppDispatch();
 
   async function logout() {
