@@ -1,9 +1,10 @@
 import { IRoute } from './types/common';
-import AuthPage from './pages/AuthPage';
 import ChatPage from './pages/ChatPage';
 import ContactsPage from './pages/ContactsPage';
 import ProfilePage from './pages/ProfilePage';
 import SettingsPage from './pages/SettingsPage';
+import Login from './components/LoginComponent';
+import Registration from './components/RegistrationComponent';
 
 export const publicRoutes: IRoute[] = [
   {
@@ -13,19 +14,13 @@ export const publicRoutes: IRoute[] = [
   },
   {
     path: "/login",
-    component: AuthPage,
-    exact: true,
-    params: {
-      isLogin: true
-    }
+    component: Login,
+    exact: true
   },
   {
     path: "/registration",
-    component: AuthPage,
-    exact: true,
-    params: {
-      isLogin: false
-    }
+    component: Registration,
+    exact: true
   }
 ]
 
