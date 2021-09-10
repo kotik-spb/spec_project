@@ -1,4 +1,4 @@
-import React, { ChangeEvent, SyntheticEvent, useState, useRef, createRef } from 'react'
+import { ChangeEvent, SyntheticEvent, useState, useRef, useEffect, createRef } from 'react'
 import { Container, Row, Col, Form, Button } from 'react-bootstrap'
 import Post from '../components/Post';
 import Modal from '../components/ModalComponent';
@@ -17,9 +17,7 @@ const Profile = () => {
   const [idPostToDelete, setIdPostToDelete] = useState<number>(0);
   const [show, setShow] = useState(false);
   
-  const formRef = useRef<HTMLFormElement>(null);
-  const $fileUpload = createRef();
-
+  const $formRef = useRef<HTMLFormElement>(null);
 
   const handleAccept = () => {
     setShow(false);
@@ -33,7 +31,7 @@ const Profile = () => {
   };
   
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetchPostsByUser()
   },[]);
 
@@ -75,7 +73,7 @@ const Profile = () => {
     try {
       setIsEditMode(true);
       setCurrentEditPostId(idPost)
-      formRef?.current?.scrollIntoView({behavior: "smooth"});
+      $formRef?.current?.scrollIntoView({behavior: "smooth"});
 
       const post = await fetchPostById(idPost);
 
@@ -135,11 +133,6 @@ const Profile = () => {
     console.log('Здесь будет содержаться логика загрузки страницы');
   }
 
-  // async function chooseImage() {
-  //   console.log(this);
-    
-  // }
-
   return (
     <Container className="pt-3">
       <Row>
@@ -147,15 +140,17 @@ const Profile = () => {
           <p>
             Kind of Image
           </p>
-          <FileUploader />
-          <Button
-            onClick={() => loadImage()}
-            type="button"
-            variant="outline-dark"
-            size="sm"
-          >
-            Загрузить аватарку
-          </Button>
+          <form>
+            <FileUploader/>
+            <Button
+              onClick={() => loadImage()}
+              type="button"
+              variant="outline-dark"
+              size="sm"
+            >
+              Загрузить аватарку
+            </Button>
+          </form>
         </Col>
         <Col sm="8">
           <div>
@@ -167,7 +162,7 @@ const Profile = () => {
           </div>
           <div>
           <h4>Посты</h4>
-          <Form onSubmit={createPost} ref={formRef}>
+          <Form onSubmit={createPost} ref={$formRef}>
             <Form.Group className="mb-3">
               <Form.Label>Тема</Form.Label>
               <Form.Control

@@ -13,6 +13,7 @@ router.get('/user/refresh', userController.refresh);
 router.post('/user/registration', userController.registration);
 router.post('/user/login', userController.login);
 router.post('/user/logout', userController.logout);
+router.post('/user/file', userController.uploadFile)
 router.post('/user/:id/posts', postController.createPost);
 
 router.patch('/user/:id/posts/:idPost', postController.updatePost);

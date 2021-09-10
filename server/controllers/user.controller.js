@@ -1,5 +1,6 @@
 const userRepository = require("../repositories/user.repository");
 const userService = require('../services/user.service');
+const path = require("path")
 
 // TODO Спросить у Сани по поводу dependency injection
 // Импорт сервиса и репы в конструкторе
@@ -65,6 +66,13 @@ class UserController {
     } catch (error) {
       next(error)
     }
+    
+  async uploadFile(req, res, next) {
+    console.log(req.files);
+    const myFile = req.files.myFile;
+    myFile.mv(`${path.resolve()}/static/${myFile.name}`);
+    
+    return res.json({files: req.files});
   }
 
 }
