@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
-import Navbar from './components/NavbarComponent';
+import Navbar from './components/Navbar';
 import AppRouter from './components/helpers/AppRouter';
 import "./styles/main.scss"
 import { useAppDispatch, useAppSelector } from './store/hooks';

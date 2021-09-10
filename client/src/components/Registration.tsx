@@ -6,7 +6,7 @@ import { setAuthState } from '../store/features/auth/authSlice';
 import { setUser } from '../store/features/userSlice';
 import { useAppDispatch } from '../store/hooks';
 
-const SignUp = () => {
+const Registration = () => {
   
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
@@ -117,4 +117,4 @@ const SignUp = () => {
   )
 }
 
-export default SignUp;
+export default Registration;

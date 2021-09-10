@@ -16,7 +16,6 @@ const Login = () => {
   async function logIn(e: SyntheticEvent<HTMLFormElement>): Promise<void> {
     e.preventDefault();
 
-
     if (email && password) {
       try {
         const {data} = await AuthService.login({email, password})
