@@ -59,7 +59,14 @@ class UserService {
         throw new ErrorHandler(400, "Неверный пароль")
       }
 
-      return user
+      const userDto = new UserDto(user);
+      const tokens = tokenService.generateTokens({...userDto});
+
+      await tokenService.saveToken(userDto.id, tokens.refreshToken);
+
+      console.log(JSON.stringify({...tokens, user: userDto}));
+
+      return {...tokens, user: userDto}
   }
 
   async logout(refreshToken) {

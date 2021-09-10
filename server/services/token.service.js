@@ -1,5 +1,5 @@
 const tokenRepository = require("../repositories/token.repository");
-const tokenModel = require("../models/token.model");
+const Token = require("../models/token.model");
 const jwt = require("jsonwebtoken");
 
 class TokenService {
@@ -9,11 +9,9 @@ class TokenService {
     if (token) {
       token.refreshToken = refreshToken;
       return token.save();
-    }
-
-    const tokenData = tokenModel.create({userId, refreshToken});
-
-    return tokenData;
+    } 
+    
+    return await Token.create({userId, refreshToken});
   }
   
   generateTokens(payload) {

@@ -15,12 +15,11 @@ class UserController {
   async registration(req,res,next) {
     try {
       const {email, password, firstName, lastName} = req.body;
-      const user = await userService.registration({email, password, firstName, lastName});
+      const userData = await userService.registration({email, password, firstName, lastName});
       // // TODO Приделать параметр maxAge со сроком жизни как у токена
-      res.cookie("refreshToken", user.refreshToken, {httpOnly: true});
-      return res.json(user)
+      res.cookie("refreshToken", userData.refreshToken, {httpOnly: true});
+      return res.json(userData)
     } catch (error) {
-      console.log('TA FUCK');
       next(error)
     }   
   }
@@ -38,9 +37,8 @@ class UserController {
   async login(req,res,next) {
     try {
       const {email, password} = req.body;
-      const user = await userService.login({email, password});
-      const { firstName, lastName, id } = user;
-      return res.json({firstName, lastName, id})
+      const userData = await userService.login({email, password});
+      return res.json(userData)
     } catch (error) {
       next(error)
     }
