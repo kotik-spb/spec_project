@@ -1,7 +1,7 @@
 import { ChangeEvent, SyntheticEvent, useState, useRef, useEffect, createRef } from 'react'
 import { Container, Row, Col, Form, Button } from 'react-bootstrap'
 import Post from '../components/Post';
-import Modal from '../components/ModalComponent';
+import Modal from '../components/Modal';
 import { IPost } from '../types/post';
 import * as postService from "../services/postService";
 import FileUploader from '../components/helpers/FileUploader';

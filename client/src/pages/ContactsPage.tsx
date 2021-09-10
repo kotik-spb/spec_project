@@ -1,6 +1,6 @@
 import React from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
-import SingleContactComponent from "../components/SingleContactComponent"
+import SingleContactComponent from "../components/SingleContact"
 
 const Contacts = () => {
   return (

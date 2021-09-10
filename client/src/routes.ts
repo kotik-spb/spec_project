@@ -3,8 +3,8 @@ import ChatPage from './pages/ChatPage';
 import ContactsPage from './pages/ContactsPage';
 import ProfilePage from './pages/ProfilePage';
 import SettingsPage from './pages/SettingsPage';
-import Login from './components/LoginComponent';
-import Registration from './components/RegistrationComponent';
+import Login from './components/Login';
+import Registration from './components/Registration';
 
 export const publicRoutes: IRoute[] = [
   {
