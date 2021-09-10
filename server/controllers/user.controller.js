@@ -66,6 +66,7 @@ class UserController {
     } catch (error) {
       next(error)
     }
+  }
     
   async uploadFile(req, res, next) {
     console.log(req.files);
