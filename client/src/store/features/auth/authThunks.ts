@@ -1,6 +1,6 @@
 import { IAuthResponse } from './../../../types/auth';
-import { API_URL } from './../../../http/index';
-import { $axiosApiInstance } from '../../../http';
+import { API_URL } from '../../../api/index';
+import { $axiosApiInstance } from '../../../api';
 import {setAuthState, setLoadingState} from './authSlice';
 import { AxiosResponse } from 'axios';
 import { setUser } from '../userSlice';

@@ -1,5 +1,5 @@
 import { ChangeEvent } from "react"
-import { $axiosApiInstance } from "../../http";
+import { $axiosApiInstance } from "../../api";
 
 const FileUploader = () => {
 

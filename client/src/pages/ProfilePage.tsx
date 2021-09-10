@@ -3,7 +3,7 @@ import { Container, Row, Col, Form, Button } from 'react-bootstrap'
 import Post from '../components/Post';
 import Modal from '../components/ModalComponent';
 import { IPost } from '../types/post';
-import * as postService from "../services/postService";
+import * as postService from "../api/services/PostService";
 import FileUploader from '../components/helpers/FileUploader';
 
 const Profile = () => {

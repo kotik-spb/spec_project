@@ -2,7 +2,7 @@ import { ChangeEvent, SyntheticEvent, useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { History } from 'history';
-import AuthService from '../services/AuthService';
+import AuthService from '../api/services/AuthService';
 import { useAppDispatch } from '../store/hooks';
 import { setUser } from '../store/features/userSlice';
 

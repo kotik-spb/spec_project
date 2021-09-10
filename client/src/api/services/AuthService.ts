@@ -1,6 +1,6 @@
-import { IAuthResponse, ILoginData, IRegistrationData  } from './../types/auth';
+import { IAuthResponse, ILoginData, IRegistrationData  } from '../../types/auth';
 import { AxiosResponse } from "axios";
-import { $axiosApiInstance } from "../http"
+import { $axiosApiInstance } from ".."
 
 export default class AuthService {
   static async registration(payload: IRegistrationData): Promise<AxiosResponse<IAuthResponse>> {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
 import {Navbar, Nav} from 'react-bootstrap'
-import AuthService from '../services/AuthService';
+import AuthService from '../api/services/AuthService';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { setAuthState } from '../store/features/auth/authSlice';
 import { setUser } from '../store/features/userSlice';
