@@ -6,16 +6,22 @@ import AppRouter from './components/helpers/AppRouter';
 import "./styles/main.scss"
 import { useAppDispatch, useAppSelector } from './store/hooks';
 import { checkAuth } from './store/features/auth/authThunks';
+import router from './utils/history';
 import axios from 'axios';
 
 function App() {
-
   const {user, auth} = useAppSelector(({user, auth}) => ({user, auth}));
   const dispatch = useAppDispatch();
   const [users, setUsers] = useState<any>([]);
 
   useEffect(() => {
     dispatch(checkAuth());
+    if (!auth.isAuth && router.location.pathname !== "/registration") {
+      console.log(router);
+      
+      router.push("/login");
+
+    }
   }, [])
 
   const loadUsers = async () => {
@@ -30,22 +36,9 @@ function App() {
   
   return (
     <Container fluid>
-      <div style={{background: "#000"}}>
-      <div className="toast align-items-center text-white bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true">
-      <div className="d-flex">
-        <div className="toast-body">
-          Hello, world! This is a 
-        </div>
-        <button type="button" className="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-      </div>
-    </div>  
-      </div>
-      <button onClick={loadUsers}>Load Users</button>
-      <p>Auth State: {auth.isAuth.toString()}</p>
-      <p>User State: {JSON.stringify(user.currentUser)}</p>
       <div>
         { users
-           ? users.map((user: any) => (
+            ? users.map((user: any) => (
             <div key={user.id}>
               <p>{user.name}</p>
               <p>{user.street}</p>
@@ -54,13 +47,18 @@ function App() {
           : null
         }
       </div>
-      <h1>Пользователь не авторизован</h1>
+      {
+        auth.isAuth
+          ? <h2>{user.currentUser.firstName} {user.currentUser.lastName}</h2>
+          : <h1>Пользователь не авторизован</h1>
+      }
+      
       <Router>
-        <Navbar />
+        { auth.isAuth &&  <Navbar />}
         <Container className="d-flex justify-content-center align-items-center">
           <AppRouter />
         </Container>
-        // TODO error handler toast component
+        {/* // TODO error handler toast component */}
       </Router>
     </Container>
   );

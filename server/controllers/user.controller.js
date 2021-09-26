@@ -17,7 +17,7 @@ class UserController {
       const {email, password, firstName, lastName} = req.body;
       const userData = await userService.registration({email, password, firstName, lastName});
       // // TODO Приделать параметр maxAge со сроком жизни как у токена
-      res.cookie("refreshToken", userData.refreshToken, {httpOnly: true});
+      res.cookie("refreshToken", userData.refreshToken, {httpOnly: true, maxAge: 1000*60*15});
       return res.json(userData)
     } catch (error) {
       next(error)
@@ -36,8 +36,10 @@ class UserController {
 
   async login(req,res,next) {
     try {
+      console.log("COOKIES FROM CLIENT", req.cookies);
       const {email, password} = req.body;
       const userData = await userService.login({email, password});
+      res.cookie("refreshToken", userData.refreshToken, {httpOnly: true, maxAge: 1000*60*15});
       return res.json(userData)
     } catch (error) {
       next(error)
@@ -59,11 +61,12 @@ class UserController {
     try {
       const {refreshToken} = req.cookies;
       const userData = await userService.refresh(refreshToken);
-      res.cookie("refreshToken", userData.refreshToken, {httpOnly: true})
+      res.cookie("refreshToken", userData.refreshToken, {httpOnly: true, maxAge: 1000*60*15})
       return res.json(userData);
     } catch (error) {
       next(error)
     }
+  }
     
   async uploadFile(req, res, next) {
     console.log(req.files);
@@ -72,7 +75,6 @@ class UserController {
     
     return res.json({files: req.files});
   }
-
 }
 
 module.exports = new UserController();

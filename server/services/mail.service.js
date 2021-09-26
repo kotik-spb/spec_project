@@ -12,7 +12,7 @@ class MailService {
       }
     });
 
-    this.transporter.verify((err, success) => {
+    this.transporter.verify((err) => {
       if (err) {
         throw new Error("Ошибка при верификации SMTP соединения", {cause: err})
       }

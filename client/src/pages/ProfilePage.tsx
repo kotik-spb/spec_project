@@ -142,14 +142,6 @@ const Profile = () => {
           </p>
           <form>
             <FileUploader/>
-            <Button
-              onClick={() => loadImage()}
-              type="button"
-              variant="outline-dark"
-              size="sm"
-            >
-              Загрузить аватарку
-            </Button>
           </form>
         </Col>
         <Col sm="8">

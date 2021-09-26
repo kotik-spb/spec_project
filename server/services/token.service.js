@@ -15,7 +15,7 @@ class TokenService {
   }
   
   generateTokens(payload) {
-    const accessToken = this.createToken(payload, process.env.JWT_ACCESS_SECRET_KEY, "15s");
+    const accessToken = this.createToken(payload, process.env.JWT_ACCESS_SECRET_KEY, "15m");
     const refreshToken = this.createToken(payload, process.env.JWT_REFRESH_SECRET_KEY, "30m");
 
     return {accessToken, refreshToken}
