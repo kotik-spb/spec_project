@@ -30,6 +30,7 @@ class UserService {
     //   activationUid: idActivation
     // });
 
+    // здесь возможно ошибка
     await tokenService.saveToken(userDto.id, tokens.refreshToken)
 
     return {...tokens, user: userDto}

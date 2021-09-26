@@ -11,7 +11,7 @@ const Token = db.define('token', {
     allowNull: false
   },
   refreshToken: {
-    type: DataTypes.STRING(1000),
+    type: DataTypes.TEXT,
     allowNull: false
   },
   userId: {

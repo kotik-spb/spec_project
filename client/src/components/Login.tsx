@@ -1,10 +1,11 @@
 import { ChangeEvent, SyntheticEvent, useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { History } from 'history';
 import AuthService from '../services/AuthService';
 import { useAppDispatch } from '../store/hooks';
 import { setUser } from '../store/features/userSlice';
+import { setAuthState } from '../store/features/auth/authSlice';
 
 
 const Login = () => {
@@ -21,6 +22,7 @@ const Login = () => {
         const {data} = await AuthService.login({email, password})
         localStorage.setItem("token", data.accessToken);
         dispatch(setUser(data.user));
+        dispatch(setAuthState(true));
         history.push(`/id_${data.user.id}`);
       }
       catch (error) {
@@ -70,7 +72,8 @@ const Login = () => {
       >
         Войти
       </Button>
-
+      <br />
+      <small>Если у Вас еще нет аккаунта? <Link to="/registration">ЗАРЕГИСТРИРОВАТЬСЯ</Link></small>
     </Form>
   )
 }

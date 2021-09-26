@@ -15,6 +15,7 @@ export const checkAuth = () => async (dispatch: any) => {
       dispatch(setAuthState(true));
       dispatch(setLoadingState(false))
   } catch (error) {
+    dispatch(setAuthState(false))    
     console.log(error);
   }
 }

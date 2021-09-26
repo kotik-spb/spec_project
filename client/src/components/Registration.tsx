@@ -1,6 +1,6 @@
 import { ChangeEvent, SyntheticEvent, useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import AuthService from "../services/AuthService";
 import { setAuthState } from '../store/features/auth/authSlice';
 import { setUser } from '../store/features/userSlice';
@@ -113,6 +113,8 @@ const Registration = () => {
       <Button variant="dark" type="submit">
         Зарегистрироваться
       </Button>
+      <br />
+      <small>У Вас уже есть аккаунт? <Link to="/login">ВОЙТИ</Link></small>
     </Form>
   )
 }

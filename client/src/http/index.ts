@@ -1,6 +1,8 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import { IAuthResponse } from "../types/auth";
 
+let ONCE_USED = false
+
 export const API_URL = "http://localhost:5000/api";
 
 export const $axiosApiInstance = axios.create({
@@ -16,16 +18,15 @@ $axiosApiInstance.interceptors.request.use((config: AxiosRequestConfig): Promise
 $axiosApiInstance.interceptors.response.use(
   (response: AxiosResponse) => {
     console.log('ВЕРНЫЙ RESPONSE');
+    console.log(response);
     return response
   },
   async (error) => {
-    console.log("RESPONSE С ОШИБКОЙ");
-    console.log(JSON.stringify(error));
     const originalConfig = error.config;
-    if (error.response.status === 401 && error.config && !error.config._onceUsed) {
+    if (error.response.status === 401 && error.config && !ONCE_USED) {
       try {
-        error.config._onceUsed = true;
-        const response = await $axiosApiInstance.get<IAuthResponse>("/refresh");
+        ONCE_USED = true;
+        const response = await $axiosApiInstance.get<IAuthResponse>("/user/refresh");
         localStorage.setItem("token", response.data.accessToken);
         return $axiosApiInstance.request(originalConfig)
       }

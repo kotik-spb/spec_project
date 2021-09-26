@@ -1,10 +1,10 @@
-import React from 'react';
-import {Redirect, Route, Switch} from 'react-router-dom';
-import NotFoundPage from '../../pages/NotFoundPage';
+import { Route, Switch, Redirect} from 'react-router-dom';
 import {publicRoutes, privateRoutes} from '../../routes';
+import { useAppSelector } from '../../store/hooks';
 
 const AppRouter = () => {
-  const idUser = localStorage.getItem("ID_USER");
+  const {isAuth} = useAppSelector(state => state.auth);
+  
   return (
     <Switch>
       {
@@ -28,6 +28,9 @@ const AppRouter = () => {
             {...r.params}
           />
         ))
+      }
+      {
+        !isAuth && <Redirect to="/login" />
       }
       {/* <Redirect exact  from="/" to={idUser ? `/id_${idUser}` : '/login'}/> */}
       {/* <Route path="*" component={NotFoundPage} /> */}
